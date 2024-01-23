@@ -3,10 +3,11 @@ using Blog.Repositories;
 using Dapper;
 using Dapper.Contrib.Extensions;
 using Microsoft.Data.SqlClient;
+using Microsoft.Identity.Client;
 
 internal class Program
 {
-    public const string CONNECTION_STRING = @"
+    private const string CONNECTION_STRING = @"
         Server=localhost,1433;
         Database=Blog;
         User ID=sa;
@@ -15,6 +16,9 @@ internal class Program
 
     private static void Main(string[] args)
     {
+        var connection = new SqlConnection(CONNECTION_STRING);
+        var userRepo = new UserRepository(connection);
+        userRepo.ReadUser(1);
         // ReadUsers();
         // ReadUser(2);
         // CreateUser();
@@ -23,15 +27,15 @@ internal class Program
         
     }
 
-    public static void ReadUsers()
-    {
-        var repository = new UserRepository();
-        var users = repository.GetAll();
+    // public static void ReadUsers()
+    // {
+    //     var repository = new UserRepository(connection);
+    //     var users = repository.GetAll();
 
-        foreach(var user in users)
-            System.Console.WriteLine(user.Name);
+    //     foreach(var user in users)
+    //         System.Console.WriteLine(user.Name);
         
-    }
+    // }
 
     public static void ReadUser(int id)
     {
