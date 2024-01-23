@@ -9,11 +9,13 @@ internal class Program
         Server=localhost,1433;
         Database=Blog;
         User ID=sa;
-        Password=1q2w3e4r@#$";
-        
+        Password=1q2w3e4r@#$;
+        TrustServerCertificate=True";
+
     private static void Main(string[] args)
     {
-        ReadUsers();
+        // ReadUsers();
+        ReadUser(2);
     }
 
     public static void ReadUsers()
@@ -27,5 +29,19 @@ internal class Program
                 System.Console.WriteLine(user.Name);
             }
         }
+    }
+    public static void ReadUser(int id)
+    {
+        using(var connection = new SqlConnection(CONNECTION_STRING))
+        {
+            var user = connection.Get<User>(id);
+
+            System.Console.WriteLine($"{user.Id} - {user.Name}");
+        }
+    }
+
+    public static void CreateUser()
+    {
+        
     }
 }

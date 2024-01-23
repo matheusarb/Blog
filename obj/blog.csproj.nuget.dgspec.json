@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\dev\\Blog\\blog.csproj": {}
+    "C:\\dev\\blog\\blog.csproj": {}
   },
   "projects": {
-    "C:\\dev\\Blog\\blog.csproj": {
+    "C:\\dev\\blog\\blog.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\dev\\Blog\\blog.csproj",
+        "projectUniqueName": "C:\\dev\\blog\\blog.csproj",
         "projectName": "blog",
-        "projectPath": "C:\\dev\\Blog\\blog.csproj",
+        "projectPath": "C:\\dev\\blog\\blog.csproj",
         "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "C:\\dev\\Blog\\obj\\",
+        "outputPath": "C:\\dev\\blog\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
