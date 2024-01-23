@@ -27,5 +27,19 @@ public class UserRepository
     }
 
     public void Update(User user)
-        => _connection.Update<User>(user);
+    {
+        if (user.Id != 0)
+            _connection.Update<User>(user);
+    }
+
+    public void Delete(User user)
+    {
+        if(user.Id != 0)
+            _connection.Delete<User>(user);
+    }
+    public void Delete(int id)
+    {
+        var userId = _connection.Get<User>(id);
+        _connection.Delete<User>(userId);
+    }
 }

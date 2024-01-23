@@ -20,4 +20,21 @@ public class RoleRepository
     public void Create(Role role)
         => _connection.Insert<Role>(role);
     
+    public void Update(Role role)
+    {
+        if (role.Id != 0)
+            _connection.Update<Role>(role);
+    }
+
+    public void Delete(Role role)
+    {
+        if(role.Id != 0)
+            _connection.Delete<Role>(role);
+    }
+    public void Delete(int id)
+    {
+        var roleId = _connection.Get<Role>(id);
+        _connection.Delete<Role>(roleId);
+    }
+
 }
