@@ -1,11 +1,12 @@
 ﻿using Blog.Models;
+using Blog.Repositories;
 using Dapper;
 using Dapper.Contrib.Extensions;
 using Microsoft.Data.SqlClient;
 
 internal class Program
 {
-    private const string CONNECTION_STRING = @"
+    public const string CONNECTION_STRING = @"
         Server=localhost,1433;
         Database=Blog;
         User ID=sa;
@@ -15,21 +16,23 @@ internal class Program
     private static void Main(string[] args)
     {
         // ReadUsers();
-        ReadUser(2);
+        // ReadUser(2);
+        // CreateUser();
+        // UpdateUser();
+        // DeleteUser(2);
+        
     }
 
     public static void ReadUsers()
     {
-        using(var connection = new SqlConnection(CONNECTION_STRING))
-        {
-            var users = connection.GetAll<User>();
+        var repository = new UserRepository();
+        var users = repository.GetAll();
 
-            foreach(var user in users)
-            {
-                System.Console.WriteLine(user.Name);
-            }
-        }
+        foreach(var user in users)
+            System.Console.WriteLine(user.Name);
+        
     }
+
     public static void ReadUser(int id)
     {
         using(var connection = new SqlConnection(CONNECTION_STRING))
@@ -42,6 +45,52 @@ internal class Program
 
     public static void CreateUser()
     {
-        
+        var user = new User()
+        {
+            Name = "Matheus Ribeiro",
+            Email = "email@email.com",
+            PasswordHash = "Hash",
+            Bio = "IBM Tech Leader",
+            Image = "https://",
+            Slug = "matheus-ribeiro"
+        };
+
+        using(var connection = new SqlConnection(CONNECTION_STRING))
+        {
+            var userId = connection.Insert<User>(user);
+
+            System.Console.WriteLine($"O usuário de id {userId} foi cadastrado");
+        }
     }
+
+    public static void UpdateUser()
+    {
+        var updatedUser = new User
+        {
+            Id = 2,
+            Name = "Matheus de Araújo Ribeiro",
+            Email = "matheus@email.com",
+            PasswordHash = "Hash",
+            Bio = "IBM Lead Software Engineer",
+            Image = "https://...",
+            Slug = "matheus-ribeiro-lead-software-engineer"
+        };
+
+        using(var connection = new SqlConnection(CONNECTION_STRING))
+        {         
+            connection.Update<User>(updatedUser);
+            System.Console.WriteLine("Atualização realizada com sucesso");
+        }
+    }
+    
+    public static void DeleteUser(int id)
+    {
+        using(var connection = new SqlConnection(CONNECTION_STRING))
+        {
+            var userToBeDeleted = connection.Get<User>(id);
+            var deletedUser = connection.Delete<User>(userToBeDeleted);
+            System.Console.WriteLine($"O usuário {userToBeDeleted.Name} foi excluído com sucesso.");  
+        }
+    }
+
 }
