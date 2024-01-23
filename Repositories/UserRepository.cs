@@ -1,3 +1,4 @@
+using System.Data.Common;
 using Blog.Models;
 using Dapper.Contrib.Extensions;
 using Microsoft.Data.SqlClient;
@@ -13,14 +14,18 @@ public class UserRepository
         _connection = connection;
     }
 
-    public User ReadUser(int id)
+    public User Get(int id)
         => _connection.Get<User>(id);
     
     public IEnumerable<User> GetAll()
         => _connection.GetAll<User>();
     
     public void Create(User user)
-        => _connection.Insert<User>(user);
+    {
+        user.Id = 0;
+        _connection.Insert<User>(user);
+    }
 
-    
+    public void Update(User user)
+        => _connection.Update<User>(user);
 }
