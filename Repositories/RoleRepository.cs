@@ -36,5 +36,4 @@ public class RoleRepository
         var roleId = _connection.Get<Role>(id);
         _connection.Delete<Role>(roleId);
     }
-
 }

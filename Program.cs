@@ -17,10 +17,11 @@ internal class Program
     private static void Main(string[] args)
     {
         var connection = new SqlConnection(CONNECTION_STRING);
+        
         connection.Open();
 
-        ReadUsers(connection);
-        ReadRoles(connection);
+        // ReadUsers(connection);
+        // ReadRoles(connection);
         
         connection.Close();
         // var userRepo = new UserRepository(connection);
@@ -32,9 +33,17 @@ internal class Program
         // DeleteUser(2);
     }
 
+    
+    public static void ReadUser(SqlConnection connection, int id)
+    {
+        var repository = new Repository<User>(connection);
+        var user = repository.Get(id);
+
+        System.Console.WriteLine(user.Name);
+    }
     public static void ReadUsers(SqlConnection connection)
     {
-        var repository = new UserRepository(connection);
+        var repository = new Repository<User>(connection);
         var users = repository.GetAll();
 
         foreach(var user in users)
