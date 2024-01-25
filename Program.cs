@@ -43,7 +43,7 @@ internal class Program
         // DeleteTag(connection, 2);
 
         // ReadCategory(connection, 1);        
-
+        ReadUsers(connection);
         connection.Close();
         
         // var userRepo = new UserRepository(connection);
@@ -70,7 +70,21 @@ internal class Program
         var users = repository.GetAll();
 
         foreach (var user in users)
+        {
             System.Console.WriteLine(user.Name);
+            foreach(var role in user.Roles)
+            {
+                System.Console.WriteLine(role.Name);
+            }
+        }
+
+    }
+
+    public static void CreateUser(SqlConnection connection, User user)
+    {
+        var repo = new Repository<User>(connection);
+        repo.Create(user);
+        System.Console.WriteLine($"O usuário {user.Name} foi adicionado.");
     }
 
     public static void UpdateUser(SqlConnection connection, User user)

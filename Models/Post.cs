@@ -12,5 +12,6 @@ public class Post
     public string Slug { get; set; }
     public DateTime CreateDate { get; set; }
     public DateTime LastUpdate { get; set; }
-
+    public int CategoryId { get; set; }
+    public int AuthorId { get; set; }
 }
