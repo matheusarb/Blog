@@ -35,9 +35,15 @@ internal class Program
         // ReadUser(connection, 4);
         // ReadCategories(connection);
         // DeleteUser(connection, 0);
+        // ReadRole(connection, 2);
+        // UpdateRole(connection, new Role() {Id =  1, Name = "Autores", Slug="Authors"});
+        // DeleteRole(connection, 2);
+        // ReadTag(connection, 1);
+        // UpdateTag(connection, new Tag(){ Id=1, Name="Backend", Slug="be-database" });
         
 
         connection.Close();
+        
         // var userRepo = new UserRepository(connection);
         // userRepo.Get(1);
         // ReadUsers();
@@ -94,13 +100,12 @@ internal class Program
         }
         
     }
-    
-    
+        
     public static void ReadRole(SqlConnection connection, int id)
     {
         var repo = new Repository<Role>(connection);
         var role = repo.GetOne(id);
-        System.Console.WriteLine($"{role.Name} - {role.Slug}");
+        System.Console.WriteLine($"{role.Id}| {role.Name} - {role.Slug}");
     }
 
     public static void ReadRoles(SqlConnection connection)
@@ -114,6 +119,36 @@ internal class Program
         }
     }
 
+    public static void UpdateRole(SqlConnection connection, Role role)
+    {
+        var repo = new Repository<Role>(connection);
+        
+        if(role.Id != 0)
+        {
+            repo.Update(role);
+            System.Console.WriteLine($"A role de id {role.Id} foi atualizada.");
+        }
+        else
+        {
+            System.Console.WriteLine("Id inválido.");
+        }
+    }
+
+    public static void DeleteRole(SqlConnection connection, int id)
+    {
+        var repo = new Repository<Role>(connection);
+        var roleToDelete = repo.GetOne(id);
+        if(id != 0)
+        {
+            repo.Delete(id);
+            System.Console.WriteLine($"A role {roleToDelete.Name} foi deletada.");
+        }
+        else
+        {
+            System.Console.WriteLine("Id inválido.");
+        }
+    }
+
     public static void ReadTags(SqlConnection connection)
     {
         var repo = new Repository<Tag>(connection);
@@ -124,7 +159,19 @@ internal class Program
             System.Console.WriteLine($"{item.Name} - {item.Slug}");
         }
     }
+    public static void ReadTag(SqlConnection connection, int id)
+    {
+        var repo = new Repository<Tag>(connection);
+        var item = repo.GetOne(id);
+        System.Console.WriteLine($"{item.Id}| {item.Name} - {item.Slug}");
+    }
 
+    public static void UpdateTag(SqlConnection connection, Tag tag)
+    {
+        var repo = new Repository<Tag>(connection);
+        repo.Update(tag);
+        System.Console.WriteLine($"A tag {tag.Name} foi atualizada.");
+    }
     public static void ReadCategories(SqlConnection connection)
     {
         var repo = new Repository<Category>(connection);
