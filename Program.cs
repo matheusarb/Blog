@@ -43,7 +43,14 @@ internal class Program
         // DeleteTag(connection, 2);
 
         // ReadCategory(connection, 1);        
-        ReadUsers(connection);
+        CreateUser(connection, new User(){
+            Name = "joao",
+            Email = "email",
+            PasswordHash = "hash",
+            Bio = "bio",
+            Image = "image",
+            Slug = "slug"
+        });
         connection.Close();
         
         // var userRepo = new UserRepository(connection);
