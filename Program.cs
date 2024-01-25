@@ -40,7 +40,9 @@ internal class Program
         // DeleteRole(connection, 2);
         // ReadTag(connection, 1);
         // UpdateTag(connection, new Tag(){ Id=1, Name="Backend", Slug="be-database" });
-        
+        // DeleteTag(connection, 2);
+
+        // ReadCategory(connection, 1);        
 
         connection.Close();
         
@@ -163,6 +165,12 @@ internal class Program
     {
         var repo = new Repository<Tag>(connection);
         var item = repo.GetOne(id);
+        if(item == null)
+        {
+            System.Console.WriteLine("Essa tag não existe");
+            return;
+        }
+
         System.Console.WriteLine($"{item.Id}| {item.Name} - {item.Slug}");
     }
 
@@ -172,6 +180,30 @@ internal class Program
         repo.Update(tag);
         System.Console.WriteLine($"A tag {tag.Name} foi atualizada.");
     }
+    
+    public static void DeleteTag(SqlConnection connection, int id)
+    {
+        var repo = new Repository<Tag>(connection);
+        Tag tagToDelete = repo.GetOne(id);
+        if(id != 0)
+        {
+            repo.Delete(id);
+            System.Console.WriteLine($"A tag {tagToDelete.Name} foi deletada.");
+        }
+        else
+        {
+            System.Console.WriteLine("Id da tag inválido.");
+        }
+    }
+
+    public static void ReadCategory(SqlConnection connection, int id)
+    {
+        var repo = new Repository<Category>(connection);
+        var item = repo.GetOne(id);
+
+        System.Console.WriteLine($"{item.Id}| {item.Name} - {item.Slug}");
+    }
+
     public static void ReadCategories(SqlConnection connection)
     {
         var repo = new Repository<Category>(connection);
