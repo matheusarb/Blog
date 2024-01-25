@@ -43,14 +43,16 @@ internal class Program
         // DeleteTag(connection, 2);
 
         // ReadCategory(connection, 1);        
-        CreateUser(connection, new User(){
-            Name = "joao",
-            Email = "email",
-            PasswordHash = "hash",
-            Bio = "bio",
-            Image = "image",
-            Slug = "slug"
-        });
+        // CreateUser(connection, new User(){
+        //     Name = "joao",
+        //     Email = "email",
+        //     PasswordHash = "hash",
+        //     Bio = "bio",
+        //     Image = "image",
+        //     Slug = "slug"
+        // });
+
+        ReadUsersWithRole(connection);
         connection.Close();
         
         // var userRepo = new UserRepository(connection);
@@ -85,6 +87,19 @@ internal class Program
             }
         }
 
+    }
+
+    public static void ReadUsersWithRole(SqlConnection connection)
+    {
+        var repo = new UserRepository(connection);
+        var items = repo.ReadWithRoles();
+
+        foreach(var item in items)
+        {
+            System.Console.WriteLine(item.Name);
+            foreach(var role in item.Roles)
+                System.Console.WriteLine($" - {role.Name}");
+        }
     }
 
     public static void CreateUser(SqlConnection connection, User user)
