@@ -1,5 +1,7 @@
-﻿using Blog.Models;
+﻿using Blog;
+using Blog.Models;
 using Blog.Repositories;
+using Blog.Screens.TagScreens;
 using Dapper;
 using Dapper.Contrib.Extensions;
 using Microsoft.Data.SqlClient;
@@ -16,13 +18,32 @@ internal class Program
 
     private static void Main(string[] args)
     {
-        var connection = new SqlConnection(CONNECTION_STRING);
+        Database.connection = new SqlConnection();
+        // var connection = new SqlConnection(CONNECTION_STRING);
 
-        connection.Open();
+        Database.connection.Open();
 
+        MenuTagScreen.Load();
 
-
-        connection.Close();
         Console.ReadKey();
+        Database.connection.Close();
+    }
+
+    public static void Load()
+    {
+        System.Console.WriteLine("Meu Blog:");
+        System.Console.WriteLine("----------");
+        System.Console.WriteLine("O que deseja fazer?");
+        System.Console.WriteLine("4- Listar Tags");
+        System.Console.WriteLine();
+        System.Console.WriteLine();
+        var option = short.Parse(Console.ReadLine()!);
+
+        switch(option)
+        {
+            case 4:
+                ListTagScreen.Load();
+                break;
+        }
     }
 }
