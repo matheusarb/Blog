@@ -22,17 +22,20 @@ internal class Program
 
         // ReadUsers(connection);
         // ReadRoles(connection);
-        UpdateUser(connection, new User
-            {
-                Id = 4,
-                Name = "Matheus de Araújo Ribeiro",
-                Email = "matheusarb@gmail.com",
-                PasswordHash = "HASH2",
-                Bio = "IBM Senior Engineer",
-                Image = "http://",
-                Slug = "se-matheus"
-            });
-        ReadUser(connection, 4);
+        // UpdateUser(connection, new User
+        //     {
+        //         Id = 4,
+        //         Name = "Matheus de Araújo Ribeiro",
+        //         Email = "matheusarb@gmail.com",
+        //         PasswordHash = "HASH2",
+        //         Bio = "IBM Senior Engineer",
+        //         Image = "http://",
+        //         Slug = "se-matheus"
+        //     });
+        // ReadUser(connection, 4);
+        // ReadCategories(connection);
+        // DeleteUser(connection, 0);
+        
 
         connection.Close();
         // var userRepo = new UserRepository(connection);
@@ -52,6 +55,7 @@ internal class Program
 
         System.Console.WriteLine(user.Name);
     }
+    
     public static void ReadUsers(SqlConnection connection)
     {
         var repository = new Repository<User>(connection);
@@ -71,5 +75,64 @@ internal class Program
         }
 
         System.Console.WriteLine($"{user.Name}, {user.Email}");
+    }
+
+    public static void DeleteUser(SqlConnection connection, int id)
+    {
+        var repo = new Repository<User>(connection);
+        User user = new();
+
+        if(id != 0)
+        {
+            user = repo.GetOne(id);
+            repo.Delete(id);
+            System.Console.WriteLine($"O usuário {user.Name} foi deletado.");
+        } 
+        else
+        {
+            System.Console.WriteLine("Id inválido.");
+        }
+        
+    }
+    
+    
+    public static void ReadRole(SqlConnection connection, int id)
+    {
+        var repo = new Repository<Role>(connection);
+        var role = repo.GetOne(id);
+        System.Console.WriteLine($"{role.Name} - {role.Slug}");
+    }
+
+    public static void ReadRoles(SqlConnection connection)
+    {
+        var repo = new Repository<Role>(connection);
+        var items = repo.GetAll();
+
+        foreach(var item in items)
+        {
+            System.Console.WriteLine($"{item.Name} - {item.Slug}");
+        }
+    }
+
+    public static void ReadTags(SqlConnection connection)
+    {
+        var repo = new Repository<Tag>(connection);
+        var items = repo.GetAll();
+
+        foreach(var item in items)
+        {
+            System.Console.WriteLine($"{item.Name} - {item.Slug}");
+        }
+    }
+
+    public static void ReadCategories(SqlConnection connection)
+    {
+        var repo = new Repository<Category>(connection);
+        var items = repo.GetAll();
+
+        foreach(var item in items)
+        {
+            System.Console.WriteLine($"{item.Name} - {item.Slug}");
+        }
     }
 }

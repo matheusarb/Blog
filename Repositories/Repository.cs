@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Dapper.Contrib.Extensions;
 using Microsoft.Data.SqlClient;
 
-namespace Blog.Models;
+namespace Blog.Repositories;
 
 public class Repository<TModel> where TModel : class
 {
@@ -20,9 +20,10 @@ public class Repository<TModel> where TModel : class
     public void Create(TModel model)
         => _connection.Insert<TModel>(model);
 
+
     public void Update(TModel model)
         => _connection.Update<TModel>(model);
-    
+
     public void Delete(int id)
     {
         var model = _connection.Get<TModel>(id);
