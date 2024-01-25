@@ -18,14 +18,12 @@ internal class Program
 
     private static void Main(string[] args)
     {
-        Database.connection = new SqlConnection();
+        Database.connection = new SqlConnection(CONNECTION_STRING);
         // var connection = new SqlConnection(CONNECTION_STRING);
 
         Database.connection.Open();
-
-        MenuTagScreen.Load();
-
-        Console.ReadKey();
+                MenuTagScreen.Load();
+                Console.ReadKey();
         Database.connection.Close();
     }
 

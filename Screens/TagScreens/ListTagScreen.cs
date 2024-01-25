@@ -9,7 +9,12 @@ public static class ListTagScreen
 {
     public static void Load()
     {
+        Console.Clear();
+        System.Console.WriteLine("Lista de Tags");
+        System.Console.WriteLine("--------------");
         //só chama os métodos
+        List();
+        Console.ReadKey();
     }
 
     public static void List()
