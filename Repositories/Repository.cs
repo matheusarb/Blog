@@ -14,6 +14,18 @@ public class Repository<TModel> where TModel : class
     public IEnumerable<TModel> GetAll()
         => _connection.GetAll<TModel>();
 
-    public TModel Get(int id)
+    public TModel GetOne(int id)
         => _connection.Get<TModel>(id);
+
+    public void Create(TModel model)
+        => _connection.Insert<TModel>(model);
+
+    public void Update(TModel model)
+        => _connection.Update<TModel>(model);
+    
+    public void Delete(int id)
+    {
+        var model = _connection.Get<TModel>(id);
+        _connection.Delete<TModel>(model);
+    }
 }

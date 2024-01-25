@@ -17,12 +17,23 @@ internal class Program
     private static void Main(string[] args)
     {
         var connection = new SqlConnection(CONNECTION_STRING);
-        
+
         connection.Open();
 
         // ReadUsers(connection);
         // ReadRoles(connection);
-        
+        UpdateUser(connection, new User
+            {
+                Id = 4,
+                Name = "Matheus de Araújo Ribeiro",
+                Email = "matheusarb@gmail.com",
+                PasswordHash = "HASH2",
+                Bio = "IBM Senior Engineer",
+                Image = "http://",
+                Slug = "se-matheus"
+            });
+        ReadUser(connection, 4);
+
         connection.Close();
         // var userRepo = new UserRepository(connection);
         // userRepo.Get(1);
@@ -33,11 +44,11 @@ internal class Program
         // DeleteUser(2);
     }
 
-    
+
     public static void ReadUser(SqlConnection connection, int id)
     {
         var repository = new Repository<User>(connection);
-        var user = repository.Get(id);
+        var user = repository.GetOne(id);
 
         System.Console.WriteLine(user.Name);
     }
@@ -46,16 +57,19 @@ internal class Program
         var repository = new Repository<User>(connection);
         var users = repository.GetAll();
 
-        foreach(var user in users)
+        foreach (var user in users)
             System.Console.WriteLine(user.Name);
     }
 
-    public static void ReadRoles(SqlConnection connection)
+    public static void UpdateUser(SqlConnection connection, User user)
     {
-        var repository = new RoleRepository(connection);
-        var roles = repository.GetAll();
+        var repo = new Repository<User>(connection);
 
-        foreach(var role in roles)
-            System.Console.WriteLine(role.Name);
+        if (user.Id != 0)
+        {
+            connection.Update(user);
+        }
+
+        System.Console.WriteLine($"{user.Name}, {user.Email}");
     }
 }
